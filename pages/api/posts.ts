@@ -46,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   let response;
   const today = format(subDays(new Date(), 31), 'yyyy-M-d');
 
-  response = await fetchWithCache(`https://newsapi.org/v2/everything?q=tesla&from=${today}&sortBy=publishedAt&apiKey=832090c50a0a45609b32a375f5f02c1a`, {
+  response = await fetchWithCache(`https://newsapi.org/v2/everything?q=tesla&from=${today}&sortBy=publishedAt&apiKey=${process.env.token}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
