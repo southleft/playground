@@ -11,15 +11,18 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     getArticles();
-    
   }, []);
 
   const getArticles = async () => {
     const response = await fetch(
-      `/api/hello`
+      `/api/posts`
     );
-    const {articles} = await response.json();
-    setArticles(articles);
+    const {articles, status, message} = await response.json();
+    if (articles && articles.length > 0) {
+      setArticles(articles);
+    } else if (status == 'error') {
+      console.error(message);
+    }
   }
 
 
@@ -36,16 +39,19 @@ const Home: NextPage = () => {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
         <div className={styles.grid}>
-
-          {articles.slice(0, 10).map((article, index) => {
-            return (
-              <a key={index} href={article.url} className={styles.card}>
-                <img src={article.urlToImage} alt="iamge" className={styles.postImage} />
-                <h2>{article.title}</h2>
-                <p>{article.description}</p>
-              </a>
-            )
-          })}
+          {articles.length > 0 ? 
+            articles.slice(0, 10).map((article, index) => {
+              return (
+                <a key={index} href={`posts/${article.publishedAt}`} className={styles.card}>
+                  <h1>here is a test</h1>
+                  <img src={article.urlToImage} alt="iamge" className={styles.postImage} />
+                  <h2>{article.title}</h2>
+                  <p>{article.description}</p>
+                </a>
+              )
+            })
+            : <p>There are no Articles to be viewed</p>
+          }
         </div>
       </main>
     </div>
