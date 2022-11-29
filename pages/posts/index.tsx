@@ -43,7 +43,6 @@ const Home: NextPage = () => {
             articles.slice(0, 10).map((article, index) => {
               return (
                 <a key={index} href={`posts/${article.publishedAt}`} className={styles.card}>
-                  <h1>here is a test</h1>
                   <img src={article.urlToImage} alt="iamge" className={styles.postImage} />
                   <h2>{article.title}</h2>
                   <p>{article.description}</p>
